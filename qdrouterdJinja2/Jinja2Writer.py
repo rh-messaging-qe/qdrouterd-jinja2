@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+"""Convenience wrapper for running bootstrap directly from source tree."""
+
 import sys
 from collections import namedtuple
 
@@ -33,7 +39,7 @@ class Jinja2Writer(object):
 
         def __exit__(self, ex, value, trace):
             self.writer.heading(sub=-1)
-            self.writer.write('}\n {% endfor %}\n')
+            self.writer.write('}\n{% endfor %}\n')
 
     def section(self, heading):
         self._heading = heading

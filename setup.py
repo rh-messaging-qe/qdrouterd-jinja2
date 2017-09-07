@@ -1,12 +1,20 @@
-from setuptools import setup, find_packages
+# -*- coding: utf-8 -*-
+
+
+"""setup.py: setuptools control."""
+
+from setuptools import setup
 
 setup(
     name='qdrouterd-jinja2',
     version='0.1',
-    packages=find_packages(exclude=['tests*']),
+    packages=['qdrouterdJinja2'],
+    entry_points={
+        "console_scripts": ['qdrouterdJinja2 = qdrouterdJinja2.qdrouterdJinja2:main']
+    },
     license='Apache 2.0',
     description='Generate Jinja2 template from qpid-dispatch',
-    long_description=open('README.md').read(),
+    long_description=open('README.md').read().decode("utf-8"),
     install_requires=[''],
     url='https://github.com/rh-messaging-qe/qdrouterd-jinja2',
     author='Dominik Lenoch <dlenoch@redhat.com>, Jakub Stejskal <jstejska@redhat.com>',
