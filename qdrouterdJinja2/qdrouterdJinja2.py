@@ -8,6 +8,7 @@ from qpid_dispatch_internal.management.qdrouter import QdSchema
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--output", help="Directs the output to a name of your choice")
+parser.add_argument("-d","--defaults", action="store_true", help="Write defaults values")
 args = parser.parse_args()
 
 
@@ -16,4 +17,4 @@ def main():
     if args.output is not None:
         sys.stdout = open(args.output, 'w')
 
-    Jinja2Writer(sys.stdout, QdSchema()).entity_types_extending("configurationEntity")
+    Jinja2Writer(sys.stdout, QdSchema(), defaults=args.defaults).entity_types_extending("configurationEntity")

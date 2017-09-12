@@ -9,8 +9,11 @@ from collections import namedtuple
 class Jinja2Writer(object):
     """Write the schema as an Jinja2 template"""
 
-    def __init__(self, output, schema, quiet=True):
-        self.output, self.schema, self.quiet = output, schema, quiet
+    def __init__(self, output, schema, quiet=True, defaults=False):
+        self.output = output
+        self.schema = schema
+        self.quiet = quiet
+        self.defaults = defaults
         self._heading = 0
 
     def warn(self, message):
@@ -41,18 +44,20 @@ class Jinja2Writer(object):
         self._heading = heading
         return self.Section(self, heading)
 
-    @staticmethod
-    def attribute_qualifiers(attr):
+    def attribute_qualifiers(self, attr):
         default = attr.default
         if isinstance(default, str) and default.startswith('$'):
             default = None  # Don't show defaults that are references, confusing.
 
         # attr.required and "required",  @todo implement required
         # attr.unique and "unique",  @todo for loop
-        return "{%% else %%}%s: %s" % (attr.name, default)
+        if default and self.defaults:
+            return "{%% else %%}    %s: %s" % (attr.name, default)
+        else:
+            return ''
 
     def attribute_type(self, attr):
-        self.writeln("{%% if %s.%s is defined %%}    %s: {{ %s.%s }} %s{%% endif %%}" % (
+        self.writeln("{%% if %s.%s is defined %%}    %s: {{ %s.%s }}%s{%% endif %%}" % (
             self._heading, attr.name, attr.name, self._heading, attr.name,
             self.attribute_qualifiers(attr)))
 
