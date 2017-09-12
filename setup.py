@@ -14,7 +14,7 @@ reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
     name='qdrouterd-jinja2',
-    version='0.1.1',
+    version='0.1.2',
     packages=['qdrouterdJinja2'],
     entry_points={
         "console_scripts": ['qdrouterdJinja2 = qdrouterdJinja2.qdrouterdJinja2:main']
