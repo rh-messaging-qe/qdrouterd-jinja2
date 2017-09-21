@@ -8,7 +8,7 @@ from qpid_dispatch_internal.management.qdrouter import QdSchema
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--output", help="Directs the output to a name of your choice")
-parser.add_argument("-d","--defaults", action="store_true", help="Write defaults values")
+parser.add_argument("-d", "--defaults", action="store_true", help="Write defaults values", default=False)
 args = parser.parse_args()
 
 
