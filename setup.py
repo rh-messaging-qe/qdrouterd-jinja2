@@ -12,6 +12,7 @@ from pip.req import parse_requirements
 # reqs is a list of requirement
 # reqs = [str(ir.req) for ir in install_reqs]
 # setup( ... install_requires=reqs, ...)
+# long_description=open('README.md').read(),
 
 setup(
     name='qdrouterd-jinja2',
@@ -23,7 +24,6 @@ setup(
     license='Apache 2.0',
     description='Generate qpid-dispatch config (qdrouterd.conf) as Jinja2 template from already'
                 ' installed qpid-dispatch.',
-    long_description=open('README.md').read(),
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     url='https://github.com/rh-messaging-qe/qdrouterd-jinja2',
