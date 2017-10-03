@@ -57,7 +57,7 @@ class Jinja2Writer(object):
             return ''
 
     def attribute_type(self, attr):
-        self.writeln("{%% if %s.%s is defined %%}    %s: {{ %s.%s }}%s{%% endif %%}" % (
+        self.writeln("{%% if %s.%s is defined %%}    %s: {{ %s.%s }}%s{%% endif %%}\n" % (
             self._heading, attr.name, attr.name, self._heading, attr.name,
             self.attribute_qualifiers(attr)))
 
