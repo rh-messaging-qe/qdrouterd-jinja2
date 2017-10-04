@@ -15,18 +15,18 @@ from pip.req import parse_requirements
 # long_description=open('README.md').read(),
 
 setup(
-    name='qdrouterd-jinja2',
+    name='qdrouter-jinja2',
     version='0.1.1',
-    packages=['qdrouterdJinja2'],
+    packages=['qdrouterJinja2'],
     entry_points={
-        "console_scripts": ['qdrouterdJinja2 = qdrouterdJinja2.qdrouterdJinja2:main']
+        "console_scripts": ['qdrouterJinja2 = qdrouterJinja2.qdrouterJinja2:main']
     },
     license='Apache 2.0',
-    description='Generate qpid-dispatch config (qdrouterd.conf) as Jinja2 template from already'
+    description='Generate qpid-dispatch config (qdrouter.conf) as Jinja2 template from already'
                 ' installed qpid-dispatch.',
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    url='https://github.com/rh-messaging-qe/qdrouterd-jinja2',
+    url='https://github.com/rh-messaging-qe/qdrouter-jinja2',
     author='Dominik Lenoch <dlenoch@redhat.com>, Jakub Stejskal <jstejska@redhat.com>',
     author_email='dlenoch@redhat.com'
 )

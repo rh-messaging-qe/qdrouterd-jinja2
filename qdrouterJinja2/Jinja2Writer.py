@@ -31,14 +31,17 @@ class Jinja2Writer(object):
 
     def heading(self, text=None):
         if text:
-            self.para("\n{%% if item.%s is defined %%}\n{%% for %s in item.%s %%}\n%s {" % (text, text, text, text))
+            self.para("\n"
+                      "{%%- if item.%s is defined %%}\n"
+                      "{%%- for %s in item.%s %%}\n"
+                      "%s {" % (text, text, text, text))
 
     class Section(namedtuple("Section", ["writer", "heading"])):
         def __enter__(self):
             self.writer.heading(self.heading)
 
         def __exit__(self, ex, value, trace):
-            self.writer.write('}\n{% endfor %}\n{% endif %}\n')
+            self.writer.write('}\n\n{%- endfor %}\n{%- endif %}')
 
     def section(self, heading):
         self._heading = heading
@@ -57,7 +60,7 @@ class Jinja2Writer(object):
             return ''
 
     def attribute_type(self, attr):
-        self.writeln("{%% if %s.%s is defined %%}    %s: {{ %s.%s }}%s{%% endif %%}" % (
+        self.writeln("{%%- if %s.%s is defined %%}    %s: {{ %s.%s }}%s{%%- endif %%}" % (
             self._heading, attr.name, attr.name, self._heading, attr.name,
             self.attribute_qualifiers(attr)))
 
