@@ -31,9 +31,8 @@ class Jinja2Writer(object):
 
     def heading(self, text=None):
         if text:
-            self.para("\n"
-                      "{%%- if item.%s is defined %%}\n"
-                      "{%%- for %s in item.%s %%}\n"
+            self.para("{%% if item.%s is defined %%}\n"
+                      "{%% for %s in item.%s %%}\n"
                       "%s {" % (text, text, text, text))
 
     class Section(namedtuple("Section", ["writer", "heading"])):
@@ -41,7 +40,7 @@ class Jinja2Writer(object):
             self.writer.heading(self.heading)
 
         def __exit__(self, ex, value, trace):
-            self.writer.write('}\n\n{%- endfor %}\n{%- endif %}')
+            self.writer.write('}\n\n{% endfor %}\n{% endif %}\n')
 
     def section(self, heading):
         self._heading = heading
@@ -60,9 +59,19 @@ class Jinja2Writer(object):
             return ''
 
     def attribute_type(self, attr):
-        self.writeln("{%%- if %s.%s is defined %%}\n    %s: {{ %s.%s }}%s\n{%%- endif %%}" % (
-            self._heading, attr.name, attr.name, self._heading, attr.name,
-            self.attribute_qualifiers(attr)))
+        if 'connector' in self._heading and 'host' in attr.name:
+            self.writeln("{%% if connector.name is defined %%}\n"
+                         "    host: {{ connector.name }}%s\n"
+                         "{%% endif %%}" % self.attribute_qualifiers(attr))
+            self.writeln("{%% if hostvars[connector.host]['docker_ip'] is defined %%}\n"
+                         "    host: {{ hostvars[connector.host]['docker_ip'] }}%s\n"
+                         "{%% else %%}\n"
+                         "    host: {{ hostvars[connector.host]['ansible_host'] }}\n"            
+                         "{%% endif %%}" % self.attribute_qualifiers(attr))
+        else:
+            self.writeln("{%% if %s.%s is defined %%}\n    %s: {{ %s.%s }}%s\n{%% endif %%}" % (
+                self._heading, attr.name, attr.name, self._heading, attr.name,
+                self.attribute_qualifiers(attr)))
 
     def attribute_types(self, holder):
         for attr in holder.my_attributes:
