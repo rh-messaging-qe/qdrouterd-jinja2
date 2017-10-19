@@ -59,10 +59,13 @@ class Jinja2Writer(object):
             return ''
 
     def attribute_type(self, attr):
-        if self._heading is 'connector' and attr.name is 'host':
-            self.writeln("{%% if hostvars['%s.%s'] is defined %%}\n    %s: {{ hostvars['%s.%s']['ansible_host'] | default(hostvars['%s.%s']['docker_ip']) }}%s\n{%% endif %%}" % (
-                self._heading, attr.name, attr.name, self._heading, attr.name, self._heading, attr.name,
-                self.attribute_qualifiers(attr)))
+        if 'connector' in self._heading and 'host' in attr.name:
+            self.writeln("{%% if hostvars['%s.%s'] is defined %%}\n"
+                         "    %s: {{ hostvars['%s.%s']['ansible_host'] | "
+                         "default(hostvars['%s.%s']['docker_ip']) }}%s\n"
+                         "{%% endif %%}" % (self._heading, attr.name,
+                                            attr.name, self._heading, attr.name,
+                                            self._heading, attr.name, self.attribute_qualifiers(attr)))
         else:
             self.writeln("{%% if %s.%s is defined %%}\n    %s: {{ %s.%s }}%s\n{%% endif %%}" % (
                 self._heading, attr.name, attr.name, self._heading, attr.name,
