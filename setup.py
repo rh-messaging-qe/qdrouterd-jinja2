@@ -16,7 +16,7 @@ reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
     name='qdrouter-jinja2',
-    version='0.1.5',
+    version='0.1.6',
     packages=['qdrouterJinja2'],
     entry_points={
         "console_scripts": ['qdrouterJinja2 = qdrouterJinja2.qdrouterJinja2:main']
