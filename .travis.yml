@@ -11,7 +11,7 @@ install:
   - printf '[defaults]\nroles_path=tests/roles/' > ansible.cfg
 
 script:
-  - ansible-playbook -i 'localhost,' tests/requirements.yml
+  - ansible-playbook tests/requirements.yml
   - tox
   - rm -rf tests/roles/
 
