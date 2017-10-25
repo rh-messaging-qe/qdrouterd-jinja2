@@ -1,8 +1,0 @@
-actionid: py27
-msg: envreport
-cmdargs: ['/home/jstejska/Projects/Red_Hat/interconnect-topology-generator/qdrouterd-jinja2/.tox/py27/bin/pip', 'freeze']
-
-pkg-resources==0.0.0
-py==1.4.34
-pytest==3.2.3
-qdrouterd-jinja2==0.1.1

@@ -1,5 +1,0 @@
-{
-  "tests/qpid_dispatch_internal/management/qdrouter.py": true, 
-  "tests/qpid_dispatch_internal/management/schema.py": true, 
-  "tests/test_Jinja2Writer.py": true
-}
