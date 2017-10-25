@@ -27,8 +27,10 @@ A Schema can be loaded/dumped to a json file.
 """
 
 import sys
-from qpid_dispatch.management.entity import EntityBase
-from qpid_dispatch.management.error import NotImplementedStatus
+# sys.path.insert(0, '../../')
+
+from ...qpid_dispatch.management.entity import EntityBase
+from ...qpid_dispatch.management.error import NotImplementedStatus
 from ..compat import OrderedDict
 
 class ValidationError(Exception):

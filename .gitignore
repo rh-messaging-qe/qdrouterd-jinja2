@@ -1,2 +1,6 @@
 *.pyc
 .idea
+.tox/
+.cache/
+pyenv*
+*.egg*

@@ -65,7 +65,7 @@ class Jinja2Writer(object):
                          "{%% endif %%}" % self.attribute_qualifiers(attr))
             self.writeln("{%% if hostvars[connector.host]['docker_ip'] is defined %%}\n"
                          "    host: {{ hostvars[connector.host]['docker_ip'] }}%s\n"
-                         "{% else %}\n"
+                         "{%% else %%}\n"
                          "    host: {{ hostvars[connector.host]['ansible_host'] }}\n"            
                          "{%% endif %%}" % self.attribute_qualifiers(attr))
         else:

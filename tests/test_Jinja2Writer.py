@@ -7,7 +7,7 @@ import pytest
 from StringIO import StringIO
 from qdrouterdJinja2.Jinja2Writer import Jinja2Writer
 from qpid_dispatch_internal.management.qdrouter import QdSchema
-from pkgutil import get_data
+# from pkgutil import get_data
 
 
 class SimplisticTest(unittest.TestCase):

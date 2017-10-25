@@ -1,0 +1,8 @@
+---
+- name: Install dispatch
+  hosts: localhost
+  vars:
+    dispatch_package_source_epel: true
+    dispatch_skip_install: false
+  roles:
+    - role: ansible-qpid-dispatch
