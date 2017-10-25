@@ -7,13 +7,13 @@ install:
   - sudo apt-add-repository -y ppa:ansible/ansible
   - sudo apt-get update -qq
   - sudo apt-get install -y ansible
-  - ansible-galaxy install --roles-path test/roles/  enkeys.qpid-dispatch
-  - printf '[defaults]\nroles_path=test/roles/' > ansible.cfg
+  - ansible-galaxy install --roles-path tests/roles/  enkeys.qpid-dispatch
+  - printf '[defaults]\nroles_path=tests/roles/' > ansible.cfg
 
 script:
   - ansible-playbook -i 'localhost,' tests/requirements.yml
   - tox
-  - rm -rf test/roles/
+  - rm -rf tests/roles/
 
 deploy:
   provider: pypi
