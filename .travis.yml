@@ -1,7 +1,32 @@
 language: python
 python:
-- '2.6'
-- '2.7'
+  - '2.7'
+
+services:
+  - docker
+
+env:
+  matrix:
+  - OS_TYPE=centos OS_VERSION=6
+  - OS_TYPE=centos OS_VERSION=7
+  global:
+  - secure: b/2lYHD0AL1Kx8b0hmub1VBniKzBUjGwB6P6mnchi9Sls9p1hUalUygla7bNitPgcOrZgvyunB+EWdOHFGIP76eCPwIUFPz8/jIH21bQkxyKuOjZ6FWCie7r//cwYhhORuM1LPw11igX2Tb35VgfpOJ9rl1/VN6iBbqH3lCwOa9qHBlgAB1jsdV7TFWdL6dosgGA4Ii0z5D31AuxOsHnnnPANC5HEFJeCgvMyhdRnmAAOpf8DPXaUnbTLAdudY9BO92b8mmft/52TQ0xRgG9+XMesagbRvIUYZuukhJPU71+6Lyjfy4QJ3s5J31iq0gJ8+AIfIfxk0Bv3h3wzGRvum89yELYfCMd8r+suGzZR+CHXAbAbOUSCjQAlBRyxcgvyEEAyDGx8SdLV6NOQCsI37kGHCQ61oEFCg0VvvxKw5AU3KLo28z/TC+AsChhuZayEs3a+yE/TuUskQIOtl+MK+6osTughN+KqPmhNyRu9qjKE5HZf0m5gODf/c8s2TwDqr9Yxmc6SXcwAePLWXJj6/Jxk+L4fP5rKkq1Z14ADz8/cdfVLfs+Ou1dwcTNtnAm1K+tlqC64AQ8O5t9qIWmEcBWVDMZaDSyXsbYfnpSEZYHeh6gnTrbIgUoYkIxQ29a2rczeYfN+RtdE3JUV+qhAdRDRG/tLktHaYo4EpBUYPw=
+  - secure: V8wKuFTao0eRBkaWNidEFfAZtjR6ZaBUzYAplesvSctUjX0bCiJRjsNavO4DwdDOlTrp6npYnu2b3APOHljP3RAcIQ4SpGXR0rH8QOSjnzA6WQAKehyVWgVgSOGhYe/tXamRJr9bCBg+t7UOyEKcN9e1xAegP+79Dmosbo5ydNEClokosLqOiSn5Yqz+CF84hMrDTQTiIlFfB7nXCY4GY3HZysCAJUJdFus3V3uj0g7Ock/2KtSb9swfX8Z/JC86DrE62DYOGcDMibsOded/z/GBvXVYjDR0uDi0RpjVeJ/2GPPqjUIQ6oI8PYek65t+Dn8tm6FbSAXKvWvJVHkZY/txFWMKG6Rm/1vawyd4fJ5OmkTIGo5XISng4thPNwusvdKEzy6i3RJlfdI+MbM0kjX3IUBtPlxzFS9FSkQXa/gbEJg0zUJkCkGPXm5Cymwz2OEB3hgmQqfAdBL/jXp3uZw6WOfCPVROKtit3tZ6o5j4loKV60jVIwZOu+g8dTw25gofi92z939fT2FOoy6RtSn/EeVu9Difi6/VUFX+aTPcJWDRewOme+TVb2j2vpSRjcnzdfH+DEfMrXFWglDZ6kgRD7SKXw6MZJAcKDJmAifFspzM6TJ1NnpFRoQHVUJwkunTUKnmUuoGKAV4IvgJji8liZw/zJ2r6zZaWEub/u0=
+
+notifications:
+    on_success: always # default: change
+    on_failure: never
+
+before_install:
+  - deactivate
+  - sudo apt-get update -qq
+  - sudo apt-get install -y -o Dpkg::Options::="--force-confnew" docker-ce
+
+  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+  - sudo service docker restart
+  - sleep 5
+  - sudo docker pull centos:centos${OS_VERSION}
+
 install:
   - pip install tox-travis
   - sudo apt-add-repository -y ppa:ansible/ansible
@@ -21,8 +46,3 @@ deploy:
   password: $pypi_password
   on:
     tags: true
-
-env:
-  global:
-  - secure: b/2lYHD0AL1Kx8b0hmub1VBniKzBUjGwB6P6mnchi9Sls9p1hUalUygla7bNitPgcOrZgvyunB+EWdOHFGIP76eCPwIUFPz8/jIH21bQkxyKuOjZ6FWCie7r//cwYhhORuM1LPw11igX2Tb35VgfpOJ9rl1/VN6iBbqH3lCwOa9qHBlgAB1jsdV7TFWdL6dosgGA4Ii0z5D31AuxOsHnnnPANC5HEFJeCgvMyhdRnmAAOpf8DPXaUnbTLAdudY9BO92b8mmft/52TQ0xRgG9+XMesagbRvIUYZuukhJPU71+6Lyjfy4QJ3s5J31iq0gJ8+AIfIfxk0Bv3h3wzGRvum89yELYfCMd8r+suGzZR+CHXAbAbOUSCjQAlBRyxcgvyEEAyDGx8SdLV6NOQCsI37kGHCQ61oEFCg0VvvxKw5AU3KLo28z/TC+AsChhuZayEs3a+yE/TuUskQIOtl+MK+6osTughN+KqPmhNyRu9qjKE5HZf0m5gODf/c8s2TwDqr9Yxmc6SXcwAePLWXJj6/Jxk+L4fP5rKkq1Z14ADz8/cdfVLfs+Ou1dwcTNtnAm1K+tlqC64AQ8O5t9qIWmEcBWVDMZaDSyXsbYfnpSEZYHeh6gnTrbIgUoYkIxQ29a2rczeYfN+RtdE3JUV+qhAdRDRG/tLktHaYo4EpBUYPw=
-  - secure: V8wKuFTao0eRBkaWNidEFfAZtjR6ZaBUzYAplesvSctUjX0bCiJRjsNavO4DwdDOlTrp6npYnu2b3APOHljP3RAcIQ4SpGXR0rH8QOSjnzA6WQAKehyVWgVgSOGhYe/tXamRJr9bCBg+t7UOyEKcN9e1xAegP+79Dmosbo5ydNEClokosLqOiSn5Yqz+CF84hMrDTQTiIlFfB7nXCY4GY3HZysCAJUJdFus3V3uj0g7Ock/2KtSb9swfX8Z/JC86DrE62DYOGcDMibsOded/z/GBvXVYjDR0uDi0RpjVeJ/2GPPqjUIQ6oI8PYek65t+Dn8tm6FbSAXKvWvJVHkZY/txFWMKG6Rm/1vawyd4fJ5OmkTIGo5XISng4thPNwusvdKEzy6i3RJlfdI+MbM0kjX3IUBtPlxzFS9FSkQXa/gbEJg0zUJkCkGPXm5Cymwz2OEB3hgmQqfAdBL/jXp3uZw6WOfCPVROKtit3tZ6o5j4loKV60jVIwZOu+g8dTw25gofi92z939fT2FOoy6RtSn/EeVu9Difi6/VUFX+aTPcJWDRewOme+TVb2j2vpSRjcnzdfH+DEfMrXFWglDZ6kgRD7SKXw6MZJAcKDJmAifFspzM6TJ1NnpFRoQHVUJwkunTUKnmUuoGKAV4IvgJji8liZw/zJ2r6zZaWEub/u0=
