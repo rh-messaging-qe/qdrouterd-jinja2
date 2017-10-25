@@ -1,3 +1,0 @@
-[console_scripts]
-qdrouterdJinja2 = qdrouterdJinja2.qdrouterdJinja2:main
-

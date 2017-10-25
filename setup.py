@@ -16,7 +16,7 @@ reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
     name='qdrouter-jinja2',
-    version='0.1.6',
+    version='0.1.7',
     packages=['qdrouterJinja2'],
     entry_points={
         "console_scripts": ['qdrouterJinja2 = qdrouterJinja2.qdrouterJinja2:main']
@@ -26,7 +26,7 @@ setup(
                 ' installed qpid-dispatch.',
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    url='https://github.com/rh-messaging-qe/qdrouter-jinja2',
+    url='https://github.com/rh-messaging-qe/qdrouterd-jinja2',
     author='Dominik Lenoch <dlenoch@redhat.com>, Jakub Stejskal <jstejska@redhat.com>',
     author_email='dlenoch@redhat.com'
 )
