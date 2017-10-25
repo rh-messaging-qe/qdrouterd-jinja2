@@ -5,4 +5,4 @@
     dispatch_package_source_epel: true
     dispatch_skip_install: false
   roles:
-    - role: ansible-qpid-dispatch
+    - role: qpid-dispatch
