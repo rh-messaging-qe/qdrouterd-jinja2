@@ -8,7 +8,7 @@ from pip.req import parse_requirements
 
 setup(
     name='qdrouter-jinja2',
-    version='0.1.7',
+    version='0.1.8',
     packages=['qdrouterJinja2'],
     entry_points={
         "console_scripts": ['qdrouterJinja2 = qdrouterJinja2.qdrouterJinja2:main']
