@@ -8,10 +8,10 @@ from pip.req import parse_requirements
 
 setup(
     name='qdrouter-jinja2',
-    version='0.1.8',
-    packages=['qdrouterJinja2'],
+    version='0.1.10',
+    packages=['qdrouterjinja2'],
     entry_points={
-        "console_scripts": ['qdrouterJinja2 = qdrouterJinja2.qdrouterJinja2:main']
+        "console_scripts": ['qdrouterjinja2 = qdrouterjinja2.qdrouterjinja2:main']
     },
     license='Apache 2.0',
     description='Generate qpid-dispatch config (qdrouter.conf) as Jinja2 template from already'
